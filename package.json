@@ -1,0 +1,34 @@
+{
+  "name": "polkadot-js-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --loader ts-node/esm  ./src/index.ts",
+    "build": "tsc --build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohaijiang/polkadot-js-example.git"
+  },
+  "author": "mohaijiang",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/mohaijiang/polkadot-js-example/issues"
+  },
+  "homepage": "https://github.com/mohaijiang/polkadot-js-example#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.23",
+    "ts-node": "^10.7.0",
+    "tslint": "^6.1.3",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "@polkadot/api": "^7.15.1",
+    "@polkadot/api-augment": "^7.15.1",
+    "@polkadot/api-contract": "^7.15.1",
+    "@polkadot/keyring": "^8.7.1"
+  }
+}
