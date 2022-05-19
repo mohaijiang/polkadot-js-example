@@ -1,12 +1,12 @@
 # polkadot-js-example
 
-## build
+## install dependency
 ```shell
 yarn 
 ```
 
 
-## dev
+## run dev
 ```shell
 yarn dev
 ```
