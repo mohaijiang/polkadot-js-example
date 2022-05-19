@@ -102,33 +102,33 @@ const createCode = async (api: ApiPromise,abi: Abi) => {
 }
 
 // tslint:disable-next-line:no-shadowed-variable
-// const createContract = async (api :ApiPromise, abi:Abi,codeHash: string) => {
-//     const blueprint = new BlueprintPromise(api, abi, codeHash);
-//     const constructorIndex = 0;
-//     const params: any[] = [true]
-//     const value = BN_ZERO ;
-//     let contract;
-//     const unsub = await blueprint.tx[contractAbi.constructors[constructorIndex].method]({
-//         gasLimit,
-//         salt: "random",
-//         storageDepositLimit: null,
-//         value: contractAbi?.constructors[constructorIndex].isPayable ? value : undefined
-//     }, ...params)
-//         .signAndSend(pair, (result: BlueprintSubmittableResult<any>) => {
-//             console.log(`===${result.status}===`)
-//             if (result.status.isInBlock || result.status.isFinalized) {
-//                 // here we have an additional field in the result, containing the contract
-//                 contract = result.contract;
-//                 if( result.dispatchError) {
-//                     console.log(result.dispatchError.toJSON())
-//                 }
-//                 if(contract) {
-//                     console.log("contractAddress: "+ contract.address.toHuman())
-//                 }
-//                 unsub();
-//             }
-//         });
-// };
+const createContract = async (api :ApiPromise, abi:Abi,codeHash: string) => {
+    const blueprint = new BlueprintPromise(api, abi, codeHash);
+    const constructorIndex = 0;
+    const params: any[] = [true]
+    const value = BN_ZERO ;
+    let contract;
+    const contractUnsub = await blueprint.tx[contractAbi.constructors[constructorIndex].method]({
+        gasLimit,
+        salt: "random",
+        storageDepositLimit: null,
+        value: contractAbi?.constructors[constructorIndex].isPayable ? value : undefined
+    }, ...params)
+        .signAndSend(pair, (result: BlueprintSubmittableResult<any>) => {
+            console.log(`===${result.status}===`)
+            if (result.status.isInBlock || result.status.isFinalized) {
+                // here we have an additional field in the result, containing the contract
+                contract = result.contract;
+                if( result.dispatchError) {
+                    console.log(result.dispatchError.toJSON())
+                }
+                if(contract) {
+                    console.log("contractAddress: "+ contract.address.toHuman())
+                }
+                contractUnsub();
+            }
+        });
+};
 
 // Construct the API as per the API sections
 // (as in all examples, this connects to a local chain)
