@@ -30,7 +30,6 @@
     "@polkadot/api-augment": "^7.15.1",
     "@polkadot/api-contract": "^7.15.1",
     "@polkadot/keyring": "^8.7.1",
-    "human-format": "^1.0.0",
     "js-base64": "^3.7.2",
     "web3": "^1.7.5"
   }
