@@ -1,5 +1,8 @@
 import { Keyring } from '@polkadot/keyring';
 import * as fs from 'fs';
+import {ApiPromise, WsProvider} from "@polkadot/api";
+import {KeyringPair} from "@polkadot/keyring/types";
+
 
 // tslint:disable-next-line:no-console
 console.log("hello TypeScript")
@@ -33,8 +36,41 @@ const keyring = new Keyring({ type: 'sr25519',ss58Format: 42 });
 // const pair = keyring.addFromUri('0x18cf643fe8f8187e8743e38c2cab076b04a1c727987300709b06b2e93e211234');
 //
 // // seed: roast double swamp expand around element conduct table prize stomach brief meat
-const backupJson =　JSON.parse(fs.readFileSync('src/contract/5DUQrTMDdCukEptpUpHxWobT3ZsrhwQqSLhnX8p9Xp1nSNay.json','utf8'));
-const krp = keyring.addFromJson(backupJson);
 
-krp.decodePkcs8("123456")
+// const backupJson =　JSON.parse(fs.readFileSync('src/file/5DUQrTMDdCukEptpUpHxWobT3ZsrhwQqSLhnX8p9Xp1nSNay.json','utf8'));
+// const krp = keyring.addFromJson(backupJson);
+//
+// krp.decodePkcs8("123456")
 
+
+const wsProvider = new WsProvider('ws://183.66.65.205:9944');
+const apiPromise = await ApiPromise.create({
+    provider:wsProvider,
+});
+
+const krp = keyring.addFromMnemonic("roast double swamp expand around element conduct table prize stomach brief meat")
+
+const transform = async (api :ApiPromise, pair: KeyringPair) => {
+
+    // Make a transfer from Alice to BOB, waiting for inclusion
+    try {
+        const unsub = await api.tx.balances
+            .transfer("5D4zqbagezn64JfwKkjJkiNLDwu2MF4wCGgWU8Muzu6C8FAL", 10000000)
+            .signAndSend(pair, (result) => {
+                console.log(`Current status is ${result.status}`);
+
+                if (result.status.isInBlock) {
+                    console.log(`Transaction included at blockHash ${result.status.asInBlock}`);
+                } else if (result.status.isFinalized) {
+                    console.log(`Transaction finalized at blockHash ${result.status.asFinalized}`);
+                    unsub();
+                }
+            });
+    } catch (e){
+        console.log(e)
+    }
+}
+
+
+
+await transform(apiPromise,krp)

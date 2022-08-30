@@ -130,7 +130,7 @@ const setValue = async (api :ApiPromise, abi :Abi, address: string,pair: Keyring
         });
 };
 
-const transform = async (api :ApiPromise,pair: KeyringPair) => {
+export const transform = async (api :ApiPromise, pair: KeyringPair) => {
 
     // Make a transfer from Alice to BOB, waiting for inclusion
     try {
